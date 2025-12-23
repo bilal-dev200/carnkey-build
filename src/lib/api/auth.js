@@ -1,0 +1,43 @@
+import Forget from "@/components/forget/Forget";
+import axiosClient from "./axiosClient";
+
+export const authApi = {
+  login: (credentials) => axiosClient.post("/auth/login", credentials),
+  register: (userData) => axiosClient.post("auth/user/register", userData),
+  registerDealer: (userData) => axiosClient.post("/auth/dealer/register", userData),
+  forgetPassowrd:(userData)=>axiosClient.post("auth/forgot-password",userData),
+  addVechicle: (userData) =>
+    axiosClient.post("dealer/vehicles", userData, {
+      headers: {
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInN1YiI6MSwiZ3VhcmQiOiJ1c2VyIiwidXNlclR5cGUiOiJERUFMRVIiLCJpYXQiOjE3NTY5MTg0MjksImV4cCI6MTc1NjkzMjgyOX0.kw0HYsU13M7nm4NUaPHp19WEBLEdUZbxqwr2B3VEnU0`,
+      },
+    }),
+  verifyToken: () => axiosClient.get("/user/verify"),
+  logout: () => axiosClient.post("/user/logout"),
+
+  // Password reset flows
+  // forgotPassword: (email) =>
+  //   axiosClient.post("/user/forgot-password", { email }),
+  resetPassword: (data) => axiosClient.post("/user/reset-password", data),
+};
+
+export const setAuthToken = (token) => {
+  if (typeof window !== "undefined") {
+    localStorage.setItem("token", token);
+  }
+
+  // Set cookie with Secure and SameSite=None for production
+  document.cookie = `auth-token=${token}; path=/; max-age=86400; SameSite=None; Secure`;
+};
+
+export const removeAuthToken = () => {
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("token");
+  }
+  document.cookie =
+    "auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+};
+
+export const getAuthToken = () => {
+  return localStorage.getItem("token");
+};
