@@ -1,5 +1,6 @@
 import FilteredCars from "@/components/carforsale/FilteredCars";
-import Filtersidebar from "@/components/dealer/filtersidebar";
+import Filtersidebar from "@/components/dealer/Filtersidebar";
+// import Filtersidebar from "@/components/dealer/filtersidebar";
 
 // const carData = [
 //   {
@@ -69,7 +70,8 @@ const page = () => {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6">
-        <Filtersidebar />
+        {/* <Filtersidebar /> */}
+        <Filtersidebar/>
 
         <div className="">
           <FilteredCars showFilters={false} showTitle={false} />
